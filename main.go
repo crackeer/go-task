@@ -12,7 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	base64Task "go-task/task/base64"
-	demoTask "go-task/task/demo"
 	downloadworkTask "go-task/task/downloadwork"
 	json2csvTask "go-task/task/json2csv"
 	md5Task "go-task/task/md5"
@@ -43,7 +42,6 @@ func enableCORS(ctx *gin.Context) {
 
 func register() {
 	toolMapping["base64"] = base64Task.Run
-	toolMapping["demo"] = demoTask.Run
 	toolMapping["downloadwork"] = downloadworkTask.Run
 	toolMapping["json2csv"] = json2csvTask.Run
 	toolMapping["md5"] = md5Task.Run

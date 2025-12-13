@@ -140,22 +140,16 @@ func getSetModelURLS(bytes []byte) ([]string, []byte) {
 }
 
 func getRelativePath(path string) string {
-	if parts := strings.Split(path, "/mesh/"); len(parts) == 2 {
-		return "mesh/" + parts[1]
-	}
 
-	if parts := strings.Split(path, "/point_cloud/"); len(parts) == 2 {
-		return "point_cloud/" + parts[1]
+	seperators := []string{"mesh", "point_cloud", "model", "lod", "areophoto"}
+	for _, seperator := range seperators {
+		if strings.HasPrefix(path, seperator+"/") {
+			return path
+		}
+		if parts := strings.Split(path, "/"+seperator+"/"); len(parts) == 2 {
+			return seperator + "/" + parts[1]
+		}
 	}
-
-	if parts := strings.Split(path, "/model/"); len(parts) == 2 {
-		return "model/" + parts[1]
-	}
-
-	if parts := strings.Split(path, "/lod/"); len(parts) == 2 {
-		return "lod/" + parts[1]
-	}
-
 	return ""
 }
 
