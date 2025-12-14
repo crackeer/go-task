@@ -2,18 +2,11 @@
 FROM golang:1.23-alpine AS builder
 
 WORKDIR /app
-
-# Copy go mod and sum files
-COPY go.mod go.sum ./
-
-# Download dependencies
-RUN go mod download
-
-# Copy the entire project
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+ENV GOPROXY https://goproxy.cn,direct
+RUN GOOS=linux go build -o main .
 
 # Runtime stage
 FROM alpine:latest

@@ -11,13 +11,11 @@ docker build --platform linux/amd64 -t go-task .
 # docker-compose.yml
 
 ```
-version: '3.8'
-
 services:
   app:
+    container_name: go-task
     image: go-task:latest
+    restart: always
     ports:
-      - 7600:80
-    environment:
-      - PORT=80 
+    - "7501:80"
 ```
