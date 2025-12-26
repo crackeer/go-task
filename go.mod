@@ -3,7 +3,7 @@ module go-task
 go 1.23.5
 
 require (
-	github.com/crackeer/task-facade v0.0.0-20251216002243-03f5885904a3
+	github.com/crackeer/task-facade v0.0.0-20251218232814-2a141117e987
 	github.com/go-resty/resty/v2 v2.17.0
 	github.com/mholt/archiver/v4 v4.0.0-alpha.9
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e

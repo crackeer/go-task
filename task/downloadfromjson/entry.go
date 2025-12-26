@@ -22,6 +22,7 @@ func Run(input string, sendFunc func(string)) (string, error) {
 
 	tempDir, err := os.MkdirTemp("", "downloadfromjson-*")
 	if err != nil {
+		sendFunc(fmt.Sprintf("failed to create temp dir: %v", err))
 		return "", fmt.Errorf("failed to create temp dir: %v", err)
 	}
 	defer func() {
