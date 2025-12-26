@@ -8,7 +8,6 @@ require (
 	github.com/mholt/archiver/v4 v4.0.0-alpha.9
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/tidwall/gjson v1.18.0
-	github.com/tidwall/sjson v1.2.5
 )
 
 require (
@@ -65,9 +64,4 @@ require (
 	golang.org/x/text v0.28.0 // indirect
 	golang.org/x/tools v0.35.0 // indirect
 	google.golang.org/protobuf v1.36.9 // indirect
-)
-
-
-replace (
-	github.com/crackeer/task-facade => ../task-facade
 )

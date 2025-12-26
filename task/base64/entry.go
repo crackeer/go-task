@@ -20,10 +20,13 @@ func Run(input string, sendFunc func(string)) (string, error) {
 
 	// 如果有输入，处理输入
 	sendFunc(fmt.Sprintf("输入: %s", d.Input))
+	var output string
 	if d.Type == "encode" {
-		sendFunc(fmt.Sprintf("编码结果: %s", util.Base64Encode(d.Input)))
+		output = util.Base64Encode(d.Input)
+		sendFunc(fmt.Sprintf("编码结果: %s", output))
 	} else {
-		sendFunc(fmt.Sprintf("解码结果: %s", util.Base64Decode(d.Input)))
+		output = util.Base64Decode(d.Input)
+		sendFunc(fmt.Sprintf("解码结果: %s", output))
 	}
-	return "", nil
+	return output, nil
 }

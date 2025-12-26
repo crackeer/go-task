@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"go-task/util"
 	"os"
+	"path/filepath"
 )
 
 // Json2CsvTask 实现了Tool接口的演示任务
 type Json2CsvTask struct {
-	Input   string `json:"input"`
-	TempDir string `json:"tempDir"`
+	Input string `json:"input"`
 }
 
 // Run 执行任务，通过sendFunc发送结果
@@ -21,8 +21,12 @@ func Run(input string, sendFunc func(string)) (string, error) {
 	}
 	// 转换JSON为CSV
 	sendFunc("正在转换JSON为CSV...")
-	csvFilePath := fmt.Sprintf("%s/output.csv", d.TempDir)
-	if err := os.MkdirAll(d.TempDir, 0755); err != nil {
+	tempDir, err := os.MkdirTemp("", "json2csv-*")
+	if err != nil {
+		return "", fmt.Errorf("failed to create temp dir: %v", err)
+	}
+	csvFilePath := filepath.Join(tempDir, "output.csv")
+	if err := os.MkdirAll(tempDir, 0755); err != nil {
 		return "", fmt.Errorf("failed to create temp dir: %v", err)
 	}
 	if err := util.Json2CsvFile([]byte(d.Input), csvFilePath); err != nil {
@@ -30,8 +34,13 @@ func Run(input string, sendFunc func(string)) (string, error) {
 	}
 
 	sendFunc(fmt.Sprintf("CSV文件已生成: %s", csvFilePath))
-	downloadURL := util.GenerationDownloadURL(csvFilePath)
-	sendFunc("下载CSV：" + downloadURL)
+	// 上传CSV文件
+	sendFunc("正在上传CSV文件...")
+	uploadResp, err := util.UploadFile(csvFilePath)
+	if err != nil {
+		return "", fmt.Errorf("failed to upload CSV file: %v", err)
+	}
+	sendFunc(fmt.Sprintf("CSV文件已上传: %s", uploadResp.URL))
 
-	return downloadURL, nil
+	return uploadResp.URL, nil
 }
