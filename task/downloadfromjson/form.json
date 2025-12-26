@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "properties": {
+        "data": {
+            "title": "JSON数据",
+            "type": "string",
+            "format": "textarea",
+            "description": "请输入JSON数据",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入WorkJSON"
+                }
+            ],
+            "props": {
+                "rows": 5
+            }
+        },
+        "keep_path": {
+            "title": "是否保留路径",
+			"type": "string",
+            "default": "yes",
+			"tooltip": "单项选择",
+			"enum": [
+				"yes",
+				"no"
+			],
+			"enumNames": [
+				"保留路径",
+				"不保留路径"
+            ]
+        }
+    }
+}

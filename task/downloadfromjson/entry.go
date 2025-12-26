@@ -1,4 +1,4 @@
-package downloadurl
+package downloadfromjson
 
 import (
 	"encoding/json"
