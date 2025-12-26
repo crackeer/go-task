@@ -7,6 +7,7 @@ import (
 	json2csvTask "go-task/task/json2csv"
 	md5Task "go-task/task/md5"
 	qrcodeTask "go-task/task/qrcode"
+	"go-task/task/sshupload"
 	"os"
 
 	"github.com/crackeer/task-facade/server"
@@ -19,6 +20,8 @@ func main() {
 	toolMapping["md5"] = md5Task.Run
 	toolMapping["qrcode"] = qrcodeTask.Run
 	toolMapping["downloadfromjson"] = downloadfromjson.Run
+	toolMapping["sshupload"] = sshupload.Run
+
 	args := os.Args[1:]
 	// run web server
 	if len(args) == 0 {

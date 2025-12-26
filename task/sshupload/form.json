@@ -1,0 +1,43 @@
+{
+    "type": "object",
+    "properties": {
+        "config": {
+            "title": "服务器",
+			"type": "array",
+            "items": {
+                "type": "string"
+            },
+            "enum": [
+                "192.168.10.7 22 root guanfu1234567*",
+                "192.168.10.9 22 root guanfu1234567*",
+                "192.168.10.19 22 root guanfu1234567*"
+            ],
+            "enumNames": [
+                "192.168.10.7",
+                "192.168.10.9",
+                "192.168.10.19"
+            ]
+        },
+        "file_url": {
+            "title": "文件URL",
+            "type": "string",
+            "format": "textarea",
+            "description": "请输入文件URL, 多个文件URL请换行，或者使用逗号分隔",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入文件URL"
+                }
+            ],
+            "props": {
+                "rows": 5
+            }
+        },
+        "remote_dir": {
+            "title": "远程目录",
+			"type": "string",
+            "default": "/tmp/upload",
+            "format": "textarea"
+        }
+    }
+}

@@ -9,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/go-resty/resty/v2"
 )
 
 func DownloadTo(urlString string, targetDir string, keepPath bool) (string, error) {
@@ -54,4 +56,19 @@ func DownloadTo(urlString string, targetDir string, keepPath bool) (string, erro
 		return "", err
 	}
 	return target, os.WriteFile(target, bytes, os.ModePerm)
+}
+
+func DownloadToDest(urlString string, targetFile string) (string, error) {
+	if err := os.MkdirAll(filepath.Dir(targetFile), os.ModePerm); err != nil {
+		return "", err
+	}
+	client := resty.New()
+	resp, err := client.R().SetOutput(targetFile).Get(urlString)
+	if err != nil {
+		return "", err
+	}
+	if resp.StatusCode() != http.StatusOK {
+		return "", fmt.Errorf("download error: %s", resp.Status())
+	}
+	return targetFile, nil
 }

@@ -1,0 +1,68 @@
+{
+    "type": "object",
+    "properties": {
+        "config": {
+            "title": "服务器",
+			"type": "string",
+            "default": "default",
+			"tooltip": "单项选择",
+			"enum": [
+				"default",
+				"kube-system",
+                "kube-public",
+                "business"
+			],
+			"enumNames": [
+				"default",
+				"kube-system",
+                "kube-public",
+                "business"
+            ]
+        },
+        "file_url": {
+            "title": "文件URL",
+            "type": "string",
+            "format": "textarea",
+            "description": "请输入文件URL",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入文件URL"
+                }
+            ],
+            "props": {
+                "rows": 5
+            }
+        },
+        "namespace": {
+            "title": "命名空间",
+			"type": "string",
+            "default": "default",
+			"tooltip": "单项选择",
+			"enum": [
+				"default",
+				"kube-system",
+                "kube-public",
+                "business"
+			],
+			"enumNames": [
+				"default",
+				"kube-system",
+                "kube-public",
+                "business"
+            ]
+        },
+        "deployment": {
+            "title": "Deployment",
+			"type": "string",
+            "default": "default",
+			"tooltip": "Deployment名称",
+			"enum": [
+				"default",
+				"kube-system",
+                "kube-public",
+                "business"
+			]
+        }
+    }
+}
