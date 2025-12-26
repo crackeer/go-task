@@ -45,7 +45,7 @@ func Run(data string, sendFunc func(string)) (string, error) {
 			sendFunc(fmt.Sprintf("upload error: %s", err.Error()))
 			continue
 		}
-		sendFunc(fmt.Sprintf("upload %s to %s success", files, remoteFiles))
+
 		retData = append(retData, remoteFiles)
 	}
 
@@ -84,18 +84,18 @@ func doUpload(config string, fileURLs []string, remoteDir string, sendFunc func(
 
 	for _, fileURL := range fileURLs {
 		tempDir := os.TempDir()
-		sendFunc(fmt.Sprintf("download file %s to %s", fileURL, tempDir))
 		urlObject, err := url.Parse(fileURL)
 		if err != nil {
 			sendFunc(fmt.Sprintf("parse url error: %s", err.Error()))
 			continue
 		}
 		targetFile := filepath.Join(tempDir, filepath.Base(urlObject.Path))
-		sendFunc(fmt.Sprintf("download file %s to %s", fileURL, targetFile))
+		sendFunc(fmt.Sprintf("download file %s to %s...", fileURL, targetFile))
 		if _, err := util.DownloadToDest(fileURL, targetFile); err != nil {
 			sendFunc(fmt.Sprintf("download error: %s", err.Error()))
 			continue
 		}
+		sendFunc(fmt.Sprintf("download file %s to %s success", fileURL, targetFile))
 		remoteFile := filepath.Join(remoteDir, filepath.Base(urlObject.Path))
 
 		// 2. upload file
@@ -104,6 +104,7 @@ func doUpload(config string, fileURLs []string, remoteDir string, sendFunc func(
 			sendFunc(fmt.Sprintf("upload error: %s", err.Error()))
 			continue
 		}
+		sendFunc(fmt.Sprintf("upload file %s to %s success", targetFile, remoteFile))
 		remoteFiles = append(remoteFiles, remoteFile)
 	}
 	return remoteFiles, nil
