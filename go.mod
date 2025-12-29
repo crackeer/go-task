@@ -4,7 +4,7 @@ go 1.23.5
 
 require (
 	github.com/cheggaaa/pb/v3 v3.1.7
-	github.com/crackeer/task-facade v0.0.0-20251218232814-2a141117e987
+	github.com/crackeer/task-facade v0.0.0-20251227024933-09c8ade1a41e
 	github.com/go-resty/resty/v2 v2.17.0
 	github.com/mholt/archiver/v4 v4.0.0-alpha.9
 	github.com/pkg/sftp v1.13.10
