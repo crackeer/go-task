@@ -1,29 +1,28 @@
 {
     "type": "object",
     "properties": {
-        "config": {
+             "config": {
             "title": "服务器",
-			"type": "string",
-            "default": "default",
-			"tooltip": "单项选择",
-			"enum": [
-				"default",
-				"kube-system",
-                "kube-public",
-                "business"
-			],
-			"enumNames": [
-				"default",
-				"kube-system",
-                "kube-public",
-                "business"
+			"type": "array",
+            "items": {
+                "type": "string"
+            },
+            "enum": [
+                "192.168.10.7 22 root guanfu1234567*",
+                "192.168.10.9 22 root guanfu1234567*",
+                "192.168.10.19 22 root guanfu1234567*"
+            ],
+            "enumNames": [
+                "192.168.10.7",
+                "192.168.10.9",
+                "192.168.10.19"
             ]
         },
         "file_url": {
             "title": "文件URL",
             "type": "string",
             "format": "textarea",
-            "description": "请输入文件URL",
+            "description": "请输入文件URL, 多个文件URL请换行，或者使用逗号分隔",
             "rules": [
                 {
                     "required": true,
@@ -37,7 +36,7 @@
         "namespace": {
             "title": "命名空间",
 			"type": "string",
-            "default": "default",
+            "default": "business",
 			"tooltip": "单项选择",
 			"enum": [
 				"default",
@@ -55,14 +54,20 @@
         "deployment": {
             "title": "Deployment",
 			"type": "string",
-            "default": "default",
+            "default": "所有",
 			"tooltip": "Deployment名称",
 			"enum": [
-				"default",
-				"kube-system",
-                "kube-public",
-                "business"
-			]
+				"",
+				"realsee-server",
+                "realsee-shepherd-svc",
+                "realsee-uwork-api"
+			],
+            "enumNames": [
+				"所有",
+				"realsee-server",
+                "realsee-shepherd-svc",
+                "realsee-uwork-api"
+            ]
         }
     }
 }

@@ -34,24 +34,12 @@ func DownloadFiles(files []string, tempDir string, sendFunc func(string)) ([]str
 	return localFiles, nil
 }
 
-func SSHUpload(config string, localFiles []string, remoteDir string, sendFunc func(string)) ([]string, error) {
+func SSHUpload(sshClient *SSHClient, localFiles []string, remoteDir string, sendFunc func(string)) ([]string, error) {
 	remoteFiles := make([]string, 0)
-	parts := strings.Split(config, " ")
-	if len(parts) != 4 {
-		sendFunc(fmt.Sprintf("config error: %s", config))
-		return nil, fmt.Errorf("config error: %s", config)
+	if len(localFiles) == 0 {
+		sendFunc(fmt.Sprintf("local files is empty"))
+		return nil, fmt.Errorf("local files is empty")
 	}
-	host := parts[0]
-	port := parts[1]
-	user := parts[2]
-	password := parts[3]
-	sendFunc(fmt.Sprintf("connect ssh %s@%s:%s", user, host, port))
-	sshClient, err := NewSSHClient(host, port, user, password)
-	if err != nil {
-		sendFunc(fmt.Sprintf("new ssh client error: %s", err.Error()))
-		return nil, fmt.Errorf("new ssh client error: %s", err.Error())
-	}
-	defer sshClient.Close()
 
 	sendFunc(fmt.Sprintf("remote mkdir %s", remoteDir))
 	if err := sshClient.Mkdir(remoteDir); err != nil {
@@ -71,4 +59,16 @@ func SSHUpload(config string, localFiles []string, remoteDir string, sendFunc fu
 		remoteFiles = append(remoteFiles, remoteFile)
 	}
 	return remoteFiles, nil
+}
+
+func NewSSHClientByConfig(config string) (*SSHClient, error) {
+	parts := strings.Split(config, " ")
+	if len(parts) != 4 {
+		return nil, fmt.Errorf("config error: %s", config)
+	}
+	host := parts[0]
+	port := parts[1]
+	user := parts[2]
+	password := parts[3]
+	return NewSSHClient(host, port, user, password)
 }

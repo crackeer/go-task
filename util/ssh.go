@@ -1,6 +1,7 @@
 package util
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -66,26 +67,27 @@ func (s *SSHClient) RemoveDir(tempDir string) error {
 	return nil
 }
 
-func (s *SSHClient) Run(cmd string) error {
+func (s *SSHClient) Run(cmd string) (string, error) {
 	session, err := s.client.NewSession()
 
 	if err != nil {
-		return fmt.Errorf("new ssh session error: %s", err.Error())
+		return "", fmt.Errorf("new ssh session error: %s", err.Error())
 	}
-	session.Stdout = os.Stdout
-	session.Stderr = os.Stderr
+	outout := &bytes.Buffer{}
+	session.Stdout = outout
+	session.Stderr = outout
 	defer session.Close()
 	if err := session.Run(cmd); err != nil {
-		return fmt.Errorf("exec ssh command error: %s", err.Error())
+		return "", fmt.Errorf("exec ssh command error: %s", err.Error())
 	}
-	return nil
+	return outout.String(), nil
 }
 
-func (s *SSHClient) K3sImport(remoteFile string) error {
+func (s *SSHClient) K3sImport(remoteFile string) (string, error) {
 	return s.Run(fmt.Sprintf("k3s ctr image import %s", remoteFile))
 }
 
-func (s *SSHClient) DockerLoad(remoteFile string) error {
+func (s *SSHClient) DockerLoad(remoteFile string) (string, error) {
 	return s.Run(fmt.Sprintf("docker load -i %s", remoteFile))
 }
 
