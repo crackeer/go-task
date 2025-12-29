@@ -45,6 +45,7 @@ func SSHUpload(config string, localFiles []string, remoteDir string, sendFunc fu
 	port := parts[1]
 	user := parts[2]
 	password := parts[3]
+	sendFunc(fmt.Sprintf("connect ssh %s@%s:%s", user, host, port))
 	sshClient, err := NewSSHClient(host, port, user, password)
 	if err != nil {
 		sendFunc(fmt.Sprintf("new ssh client error: %s", err.Error()))
@@ -57,10 +58,9 @@ func SSHUpload(config string, localFiles []string, remoteDir string, sendFunc fu
 		sendFunc(fmt.Sprintf("mkdir error: %s", err.Error()))
 		return nil, fmt.Errorf("mkdir error: %s", err.Error())
 	}
-
+	sendFunc(fmt.Sprintf("local files: %s", strings.Join(localFiles, ",")))
 	for _, localFile := range localFiles {
 		remoteFile := filepath.Join(remoteDir, filepath.Base(localFile))
-
 		// 2. upload file
 		sendFunc(fmt.Sprintf("upload file %s to %s....", localFile, remoteFile))
 		if err := sshClient.UploadTo(localFile, remoteFile); err != nil {
