@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -20,6 +21,7 @@ func DownloadTo(urlString string, targetDir string, keepPath bool) (string, erro
 				InsecureSkipVerify: true, // 忽略证书验证
 			},
 		},
+		Timeout: time.Second * 120,
 	}
 
 	urlString = strings.TrimSpace(urlString)
