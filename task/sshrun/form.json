@@ -1,0 +1,39 @@
+{
+    "type": "object",
+    "properties": {
+        "config": {
+            "title": "服务器",
+			"type": "array",
+            "items": {
+                "type": "string"
+            },
+            "enum": [
+                "192.168.10.7 22 root guanfu1234567*",
+                "192.168.10.9 22 root guanfu1234567*",
+                "192.168.10.19 22 root guanfu1234567*"
+            ],
+            "enumNames": [
+                "192.168.10.7",
+                "192.168.10.9",
+                "192.168.10.19"
+            ]
+        },
+        "command": {
+            "title": "命令",
+			"type": "array",
+            "items": {
+                "type": "string"
+            },
+            "enum": [
+                "kubectl get deployment -n business",
+                "kubectl get pod -n business",
+                "kubectl get service -n business"
+            ],
+            "enumNames": [
+                "获取business命名空间下的Deployment",
+                "获取business命名空间下的Pod",
+                "获取business命名空间下的Service"
+            ]
+        }
+    }
+}
