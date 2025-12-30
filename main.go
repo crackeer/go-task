@@ -7,6 +7,7 @@ import (
 	json2csvTask "go-task/task/json2csv"
 	md5Task "go-task/task/md5"
 	qrcodeTask "go-task/task/qrcode"
+	s3temptokenTask "go-task/task/s3temptoken"
 	sshk3simport "go-task/task/sshk3simport"
 	"go-task/task/sshupload"
 	"os"
@@ -23,6 +24,7 @@ func main() {
 	toolMapping["downloadfromjson"] = downloadfromjson.Run
 	toolMapping["sshupload"] = sshupload.Run
 	toolMapping["sshk3simport"] = sshk3simport.Run
+	toolMapping["s3temptoken"] = s3temptokenTask.Run
 
 	args := os.Args[1:]
 	// run web server

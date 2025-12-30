@@ -1,0 +1,65 @@
+{
+    "type": "object",
+    "properties": {
+        "endpoint": {
+            "title": "S3 Endpoint",
+            "type": "string",
+            "default": "http://10.33.207.152:4500",
+            "description": "请输入S3 Endpoint,",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入S3 Endpoint"
+                }
+            ]
+        },
+         "access_key": {
+            "title": "Access Key",
+            "type": "string",
+            "default": "project",
+            "description": "请输入Access Key",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入Access Key"
+                }
+            ]
+        },
+         "secret_key": {
+            "title": "Secret Key",
+            "type": "string",
+            "default": "password",
+            "description": "请输入Secret Key",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入Secret Key"
+                }
+            ]
+        },
+        "bucket": {
+            "title": "Bucket",
+            "type": "string",
+            "default": "project",
+            "description": "请输入Bucket",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入Bucket"
+                }
+            ]
+        },
+         "object_name": {
+            "title": "Object Name",
+            "type": "string",
+            "default": "object",
+            "description": "请输入Object Name",
+            "rules": [
+                {
+                    "required": true,
+                    "message": "请输入Object Name"
+                }
+            ]
+        }
+    }
+}

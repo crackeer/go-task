@@ -1,7 +1,7 @@
 {
     "type": "object",
     "properties": {
-             "config": {
+        "config": {
             "title": "服务器",
 			"type": "array",
             "items": {
