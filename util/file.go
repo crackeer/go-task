@@ -2,8 +2,11 @@ package util
 
 import (
 	"context"
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -70,6 +73,29 @@ func QuickZip(srcDir, dest string) error {
 		return err
 	}
 	return nil
+}
+
+// CalculateFileMD5 计算文件的MD5值
+//
+//	@param filePath 文件路径
+//	@return MD5值的十六进制字符串
+//	@return 错误信息
+func CalculateFileMD5(filePath string) (string, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", fmt.Errorf("failed to open file: %v", err)
+	}
+	defer file.Close()
+
+	hash := md5.New()
+	if _, err := io.Copy(hash, file); err != nil {
+		return "", fmt.Errorf("failed to calculate MD5: %v", err)
+	}
+
+	md5Bytes := hash.Sum(nil)
+	md5String := hex.EncodeToString(md5Bytes)
+
+	return md5String, nil
 }
 
 func GetDirFilesAsMap(dirPath string) map[string]string {

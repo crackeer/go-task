@@ -38,17 +38,7 @@ func Run(input string, sendFunc func(string)) (string, error) {
 	cfg, err := config.LoadDefaultConfig(context.TODO(),
 		config.WithRegion(region),
 		config.WithCredentialsProvider(staticCreds),
-		config.WithEndpointResolverWithOptions(
-			aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-				if service == "sts" {
-					return aws.Endpoint{
-						URL: minioEndpoint,
-					}, nil
-				}
-				// 其他服务（如 s3）可单独处理，此处仅用于 STS
-				return aws.Endpoint{}, fmt.Errorf("unknown service %s", service)
-			}),
-		),
+		config.WithBaseEndpoint(minioEndpoint),
 	)
 	if err != nil {
 		sendFunc(fmt.Sprintf("load aws config error: %s", err.Error()))
